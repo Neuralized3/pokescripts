@@ -3,7 +3,7 @@
 # Usage: bash install.sh [-shd | -gen5]
 set -e
 
-REPO_URL="https://github.com/neuralized3/pokescripts.git"
+REPO_URL="https://github.com/Neuralized3/pokescripts.git"
 DEST="$HOME/pokescripts"
 STYLE="$1"
 
