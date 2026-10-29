@@ -9,31 +9,56 @@ A small script that shows a random Pokémon sprite in the [kitty](https://sw.kov
 
 ## Installation
 
+Pick the sprite style you want shown on startup:
+
+| Style | Sprites |
+|-------|---------|
+| `-shd` | Pokémon Showdown sprites (GIF), Pokémon #1-982 |
+| `-gen5` | Generation V sprites (PNG), Pokémon #1-643 only |
+
 ### Automatic (recommended)
 
-Run this single command. It clones the repo to `~/pokescripts` and adds the startup lines to your `~/.zshrc` or `~/.bashrc` automatically (it detects your shell and won't add them twice):
+Run one of these. It clones the repo to `~/pokescripts` and adds the startup lines to your `~/.zshrc` or `~/.bashrc` automatically. It detects your shell and won't add the lines twice.
+
+Showdown sprites:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/<your-username>/pokescripts/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/Neuralized3/pokescripts/main/install.sh | bash -s -- -shd
 ```
 
-Already cloned the repo? Run the installer from inside it instead:
+Generation V sprites:
 
 ```bash
-bash ~/pokescripts/install.sh
+curl -fsSL https://raw.githubusercontent.com/Neuralized3/pokescripts/main/install.sh | bash -s -- -gen5
 ```
+
+If you leave off the style, the installer asks you to choose (and defaults to `-shd`).
+
+Already cloned the repo? Run the installer from inside it:
+
+```bash
+bash ~/pokescripts/install.sh -shd     # or -gen5
+```
+
+To switch styles later, just run the installer again with the other style. It replaces the old setup instead of duplicating it.
 
 ### Manual
 
 1. Clone the repo into your home directory under the name `pokescripts`:
 
    ```bash
-   git clone https://github.com/<your-username>/pokescripts.git ~/pokescripts
+   git clone https://github.com/Neuralized3/pokescripts.git ~/pokescripts
    ```
 
-2. Append the startup lines to your shell config with one command.
+2. Add the alias and startup command to your shell config (`~/.zshrc` for zsh, `~/.bashrc` for bash). Choose **one** of the two `pokemon` lines.
 
-   For zsh:
+   ```bash
+   alias pokemon='python3 ~/pokescripts/pokemon.py'
+   pokemon -shd      # Showdown sprites (GIF)
+   # pokemon -gen5   # Generation V sprites (PNG)
+   ```
+
+   Or append it with one command (swap `-shd` for `-gen5` if you want Gen V). For zsh:
 
    ```bash
    printf "\n# pokescripts\nalias pokemon='python3 ~/pokescripts/pokemon.py'\npokemon -shd\n" >> ~/.zshrc
@@ -45,20 +70,13 @@ bash ~/pokescripts/install.sh
    printf "\n# pokescripts\nalias pokemon='python3 ~/pokescripts/pokemon.py'\npokemon -shd\n" >> ~/.bashrc
    ```
 
-   Or edit the file yourself and add these lines at the end:
-
-   ```bash
-   alias pokemon='python3 ~/pokescripts/pokemon.py'
-   pokemon -shd
-   ```
-
 3. Reload your shell config (or just open a new kitty window):
 
    ```bash
    source ~/.zshrc   # or ~/.bashrc
    ```
 
-A random sprite will now appear whenever kitty starts. Change `-shd` to `-gen5` in your config if you prefer the Generation V style.
+A random sprite will now appear whenever kitty starts.
 
 ## Usage
 
