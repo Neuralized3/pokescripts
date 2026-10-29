@@ -58,8 +58,8 @@ elif len(sys.argv) == 2:
         print(
             """Usage: pokemon <style> [name]
 Styles:
-  -gen5    Generation V sprites (PNG), Pokémon #1-649 only
-  -shd     Pokémon Showdown sprites (GIF), Pokémon #1-1025
+  -gen5    Generation V sprites (PNG), Pokémon #1-643 only (Not according to pokedex.)
+  -shd     Pokémon Showdown sprites (GIF), Pokémon #1-982 (Not according to pokedex.)
 Examples:
   pokemon -gen5              random Gen V sprite (png)
   pokemon -shd               random Showdown sprite (gif)
