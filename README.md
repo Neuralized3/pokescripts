@@ -1,4 +1,43 @@
-# pokescripts
+<h1 align="center">pokescripts</h1>
+
+<p align="center">
+  Pokémon in your <a href="https://sw.kovidgoyal.net/kitty/">kitty</a> terminal.<br>
+  A random sprite on every launch, or a system info screen with a Pokémon as the logo.
+</p>
+
+<p align="center">
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue" alt="MIT License"></a>
+  <img src="https://img.shields.io/badge/python-3-3776AB?logo=python&logoColor=white" alt="Python 3">
+  <img src="https://img.shields.io/badge/terminal-kitty-8A2BE2" alt="kitty terminal">
+  <img src="https://img.shields.io/badge/PokéAPI-Gen%20V%20sprites-EF5350" alt="Gen V sprites">
+</p>
+
+<p align="center">
+  <a href="#installation">Installation</a> ·
+  <a href="#usage">Usage</a> ·
+  <a href="#uninstall">Uninstall</a>
+</p>
+
+<table align="center">
+  <tr>
+    <td align="center">
+      <img src="assets/shd.gif" width="360" alt="pokemon with Showdown sprites"><br>
+      <sub><b>pokemon</b> · Showdown (<code>-shd</code>)</sub>
+    </td>
+    <td align="center">
+      <img src="assets/gen5.png" width="360" alt="pokemon with Generation V sprites"><br>
+      <sub><b>pokemon</b> · Generation V (<code>-gen5</code>)</sub>
+    </td>
+  </tr>
+  <tr>
+    <td align="center" colspan="2">
+      <img src="assets/pokefetch.png" width="740" alt="pokefetch showing system info with a Pokémon logo"><br>
+      <sub><b>pokefetch</b> · fastfetch with a Pokémon logo</sub>
+    </td>
+  </tr>
+</table>
+
+---
 
 Two small scripts for the [kitty](https://sw.kovidgoyal.net/kitty/) terminal:
 
@@ -222,7 +261,7 @@ fastfetch --logo-type kitty-icat --logo pikachu.png --logo-width 12 --logo-heigh
 
 ## License
 
-The code in this repository is released under the [MIT License](LICENSE).
+The code in this repository is released under the [MIT License](https://mit-license.org/).
 
 The MIT License covers the code only. It does **not** cover the sprite images.
 
