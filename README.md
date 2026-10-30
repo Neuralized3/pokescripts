@@ -25,48 +25,59 @@ brew install fastfetch          # macOS
 
 ## Installation
 
-Choose what should run **every time a terminal starts**. The `pokemon` and `pokefetch` aliases are added in every case, so you can always run either one by hand.
+You choose three things:
 
-| Option | Runs on startup | Sprites |
-|--------|-----------------|---------|
-| `-shd` | `pokemon -shd` | Pokémon Showdown (GIF), Pokémon #1-982 |
-| `-gen5` | `pokemon -gen5` | Generation V (PNG), Pokémon #1-643 only |
-| `-pokefetch` | `pokefetch` | fastfetch with a random Gen V Pokémon logo (needs fastfetch) |
-| `-none` | nothing | aliases only |
+1. **What to install:** `pokemon`, `pokefetch`, or both.
+2. **Art style** (pokemon only): Showdown (GIF, Pokémon #1-982) or Generation V (PNG, Pokémon #1-643). `pokefetch` always uses Gen V.
+3. **What runs when a terminal opens:** the one you installed, or, if you installed both, either one or neither.
+
+Only the aliases for what you install are added to your shell config.
 
 ### Automatic (recommended)
 
-The installer clones the repo to `~/pokescripts` and adds the aliases (and your chosen startup command) to `~/.zshrc` or `~/.bashrc`. It detects your shell, backs up your config before editing it, and never adds the lines twice.
+The installer clones the repo to `~/pokescripts` and edits `~/.zshrc` or `~/.bashrc`. It detects your shell, backs up your config before editing, and never adds the lines twice.
 
-Pick one:
-
-```bash
-# Showdown sprites on startup
-curl -fsSL https://raw.githubusercontent.com/Neuralized3/pokescripts/main/install.sh | bash -s -- -shd
-
-# Generation V sprites on startup
-curl -fsSL https://raw.githubusercontent.com/Neuralized3/pokescripts/main/install.sh | bash -s -- -gen5
-
-# pokefetch (fastfetch + Pokémon) on startup
-curl -fsSL https://raw.githubusercontent.com/Neuralized3/pokescripts/main/install.sh | bash -s -- -pokefetch
-
-# Aliases only, nothing on startup
-curl -fsSL https://raw.githubusercontent.com/Neuralized3/pokescripts/main/install.sh | bash -s -- -none
-```
-
-Leave off the option and the installer asks you to choose (default `-shd`):
+Interactive (asks you all three questions):
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/Neuralized3/pokescripts/main/install.sh | bash
 ```
 
-Already cloned the repo? Run the installer from inside it:
+Or skip the questions with options:
+
+| Option | Meaning |
+|--------|---------|
+| `-pokemon` / `-pokefetch` / `-both` | what to install |
+| `-shd` / `-gen5` | pokemon art style (`-shd` or `-gen5` alone implies `-pokemon`) |
+| `-startup=pokemon` / `-startup=pokefetch` / `-startup=none` | what runs on terminal start (default: whatever you installed; with `-both`, asked) |
 
 ```bash
-bash ~/pokescripts/install.sh -shd     # or -gen5, -pokefetch, -none
+# pokemon only, Showdown sprites
+curl -fsSL https://raw.githubusercontent.com/Neuralized3/pokescripts/main/install.sh | bash -s -- -pokemon -shd
+
+# pokemon only, Generation V sprites
+curl -fsSL https://raw.githubusercontent.com/Neuralized3/pokescripts/main/install.sh | bash -s -- -pokemon -gen5
+
+# pokefetch only
+curl -fsSL https://raw.githubusercontent.com/Neuralized3/pokescripts/main/install.sh | bash -s -- -pokefetch
+
+# both, pokemon (Showdown) runs on startup
+curl -fsSL https://raw.githubusercontent.com/Neuralized3/pokescripts/main/install.sh | bash -s -- -both -shd -startup=pokemon
+
+# both, pokefetch runs on startup (pokemon stays available by hand, Gen V style)
+curl -fsSL https://raw.githubusercontent.com/Neuralized3/pokescripts/main/install.sh | bash -s -- -both -gen5 -startup=pokefetch
+
+# both, nothing on startup
+curl -fsSL https://raw.githubusercontent.com/Neuralized3/pokescripts/main/install.sh | bash -s -- -both -startup=none
 ```
 
-To switch later, run the installer again with a different option. It replaces the old setup instead of duplicating it.
+Already cloned the repo? Run the installer from inside it, with the same options:
+
+```bash
+bash ~/pokescripts/install.sh -both -shd -startup=pokemon
+```
+
+To switch later, run the installer again with different options. It replaces the old setup instead of duplicating it. `bash install.sh -h` lists every option.
 
 ### Manual
 
@@ -76,46 +87,60 @@ To switch later, run the installer again with a different option. It replaces th
    git clone https://github.com/Neuralized3/pokescripts.git ~/pokescripts
    ```
 
-2. Add the aliases to your shell config. Set `RC` to the file for your shell, then run **one** of the commands below.
+2. Add the lines for your choice to your shell config. Set `RC` to the file for your shell, then run **one** of the commands below.
 
    ```bash
    RC=~/.zshrc      # zsh
    RC=~/.bashrc     # bash
    ```
 
-   **Showdown sprites on startup:**
+   **pokemon only, Showdown sprites on startup:**
+
+   ```bash
+   printf "\n# >>> pokescripts >>>\nalias pokemon='python3 ~/pokescripts/pokemon.py'\npokemon -shd\n# <<< pokescripts <<<\n" >> "$RC"
+   ```
+
+   **pokemon only, Generation V sprites on startup:**
+
+   ```bash
+   printf "\n# >>> pokescripts >>>\nalias pokemon='python3 ~/pokescripts/pokemon.py'\npokemon -gen5\n# <<< pokescripts <<<\n" >> "$RC"
+   ```
+
+   **pokefetch only (runs on startup):**
+
+   ```bash
+   printf "\n# >>> pokescripts >>>\nalias pokefetch='python3 ~/pokescripts/pokefetch.py'\npokefetch\n# <<< pokescripts <<<\n" >> "$RC"
+   ```
+
+   **Both, pokemon (Showdown) runs on startup:**
 
    ```bash
    printf "\n# >>> pokescripts >>>\nalias pokemon='python3 ~/pokescripts/pokemon.py'\nalias pokefetch='python3 ~/pokescripts/pokefetch.py'\npokemon -shd\n# <<< pokescripts <<<\n" >> "$RC"
    ```
 
-   **Generation V sprites on startup:**
-
-   ```bash
-   printf "\n# >>> pokescripts >>>\nalias pokemon='python3 ~/pokescripts/pokemon.py'\nalias pokefetch='python3 ~/pokescripts/pokefetch.py'\npokemon -gen5\n# <<< pokescripts <<<\n" >> "$RC"
-   ```
-
-   **pokefetch on startup:**
+   **Both, pokefetch runs on startup:**
 
    ```bash
    printf "\n# >>> pokescripts >>>\nalias pokemon='python3 ~/pokescripts/pokemon.py'\nalias pokefetch='python3 ~/pokescripts/pokefetch.py'\npokefetch\n# <<< pokescripts <<<\n" >> "$RC"
    ```
 
-   **Aliases only (nothing on startup):**
+   **Both, nothing on startup:**
 
    ```bash
    printf "\n# >>> pokescripts >>>\nalias pokemon='python3 ~/pokescripts/pokemon.py'\nalias pokefetch='python3 ~/pokescripts/pokefetch.py'\n# <<< pokescripts <<<\n" >> "$RC"
    ```
 
-   Prefer to edit the file yourself? Paste this into it and delete the startup line you don't want:
+   Prefer to edit the file yourself? Paste this into it and keep only the lines you want:
 
    ```bash
    alias pokemon='python3 ~/pokescripts/pokemon.py'
    alias pokefetch='python3 ~/pokescripts/pokefetch.py'
-   pokemon -shd        # Showdown sprites (GIF)
-   # pokemon -gen5     # Generation V sprites (PNG)
-   # pokefetch         # fastfetch with a Pokémon logo
+   pokemon -shd        # startup: Showdown sprites (GIF)
+   # pokemon -gen5     # startup: Generation V sprites (PNG)
+   # pokefetch         # startup: fastfetch with a Pokémon logo
    ```
+
+   Only enable one startup line, otherwise two images show on every launch.
 
 3. Reload your shell config (or just open a new kitty window):
 
@@ -152,24 +177,44 @@ Examples:
 Shows your system info with fastfetch, using a Generation V sprite as the logo.
 
 ```
-Usage: pokefetch [name]
+Usage: pokefetch [options] [name]
+Runs fastfetch with a Generation V Pokémon as the logo.
+Options:
+  --scale N        logo size multiplier (default 1.3; 1 = native pixels)
+  --pad-left N     blank columns left of the logo (default 5)
+  --pad-right N    blank columns between the logo and the info (default 8)
+  -help            show this guide
 Examples:
-  pokefetch                  random Gen V Pokémon as the logo
-  pokefetch charizard        a specific Pokémon
-  pokefetch nidoran-f        names are lowercase and match the file names
+  pokefetch                              random Pokémon
+  pokefetch charizard                    a specific Pokémon
+  pokefetch --scale 2 pikachu            bigger
+  pokefetch --scale 0.8                  smaller, random Pokémon
+  pokefetch --pad-left 0 --pad-right 2   compact layout
+  pokefetch nidoran-f                    names are lowercase and match the
+                                         file names (nidoran-f, ho-oh)
+Ideas:
+  export POKEFETCH_SCALE=2               your default size, put it in ~/.zshrc
+                                         or ~/.bashrc
+  alias pf='pokefetch --scale 1.8'       a shortcut with your favourite settings
+  pokefetch --scale 3 mewtwo             a big showpiece
+  pokefetch --scale 1 --pad-left 0       tiny logo, hugging the left edge
 ```
 
 The logo is sized automatically: each sprite is scaled by the same factor from its real pixel size and your terminal's cell size, so small Pokémon stay small and large ones stay large, on any font or zoom level.
 
-To adjust the look, edit the constants at the top of `~/pokescripts/pokefetch.py`:
+#### Changing the size
 
-```python
-SCALE = 1.3      # logo size multiplier (raise for bigger, lower for smaller)
-PAD_LEFT = 10    # blank columns left of the logo
-PAD_RIGHT = 10   # blank columns between the logo and the system info
-```
+Pick whichever fits how often you want to change it. The first one found wins: flag, then environment variable, then the default in the file.
 
-To preview a size without editing anything, run fastfetch directly from `~/pokescripts/gen5`:
+| Method | Example | Lasts |
+|--------|---------|-------|
+| Flag | `pokefetch --scale 2` | one run |
+| Environment variable | `export POKEFETCH_SCALE=2` in your `~/.zshrc` / `~/.bashrc` | every terminal |
+| Edit the file | change `SCALE`, `PAD_LEFT` or `PAD_RIGHT` at the top of `~/pokescripts/pokefetch.py` | permanently (a `git pull` may overwrite it) |
+
+`1` is the sprite's native pixel size, so `1.3` is a bit larger, `2` is double, and `0.8` is smaller. `--pad-left` and `--pad-right` take whole numbers of columns.
+
+To preview a size without touching any script, run fastfetch directly from `~/pokescripts/gen5`:
 
 ```bash
 fastfetch --logo-type kitty-icat --logo pikachu.png --logo-width 12 --logo-height 6 --logo-padding-left 10 --logo-padding-right 10
